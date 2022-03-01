@@ -230,6 +230,19 @@ def craiglockhart_to_sighthill
   JOIN
     stops stopc ON (c.stop_id = stopc.id)
   WHERE
-    stopa.name = 'Craiglockhart' AND stopc.name = 'Sighthill'
+    stopa.name = 'Craiglockhart' AND stopb.name IN 
+    (SELECT DISTINCT
+    a.company,
+    a.num
+    FROM
+      routes a
+    JOIN
+      routes b ON (a.company = b.company AND a.num = b.num)
+    JOIN
+      stops stopa ON (a.stop_id = stopa.id)
+    JOIN
+      stops stopb ON (b.stop_id = stopb.id)
+    WHERE
+      stopb.name = 'Sighthill')
   SQL
 end
