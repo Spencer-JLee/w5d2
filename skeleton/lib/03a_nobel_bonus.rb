@@ -16,6 +16,15 @@ def physics_no_chemistry
   FROM
     nobels
   WHERE
-    
+    subject = 'Physics' AND yr NOT IN (
+      SELECT
+        yr
+      FROM
+        nobels
+      WHERE
+        subject = 'Chemistry'
+    )
+    GROUP BY
+      yr
   SQL
 end
